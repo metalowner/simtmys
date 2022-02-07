@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import Link from 'next/link';
 
 const PostDetail = ({ post }) => {
   const getContentFragment = (index, text, obj, type) => {
@@ -17,15 +18,19 @@ const PostDetail = ({ post }) => {
       if (obj.underline) {
         modifiedText = (<u key={index}>{text}</u>);
       }
+
+      if (obj.href) {
+        modifiedText = (<a key={index} href={obj.href} target='_blank' rel='noopener noreferrer'><span className='transition duration-700 mb-8 cursor-pointer hover:text-pink-600 font-semibold underline'>{obj.children[0].text}</span></a>)
+      }
     }
 
     switch (type) {
       case 'heading-three':
-        return <h3 key={index} className="text-xl font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h3>;
+        return <h3 key={index} className="text-xl text-center font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h3>;
       case 'paragraph':
         return <p key={index} className="mb-8">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</p>;
       case 'heading-four':
-        return <h4 key={index} className="text-md font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h4>;
+        return <h4 key={index} className="text-md text-center font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h4>;
       case 'image':
         return (
           <img
@@ -43,7 +48,7 @@ const PostDetail = ({ post }) => {
 
   return (
     <div className='bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8'>
-        <div className='relative overflow-hidden shadow-md mb-6'>
+        <div className='relative overflow-hidden shadow-md mb-6 lg:pl-2 lg:pr-2'>
           <img
             src={post.featuredImage.url}
             alt={post.title}
@@ -51,7 +56,7 @@ const PostDetail = ({ post }) => {
           />
           <div className='px-4 lg:px-0'>
             <div className='flex items-center mb-8 w-full'>
-              <div className='flex items-center mb-4 lg:mb-0 w-full lg:w-auto mr-8'>
+              <div className='flex items-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 mt-2'>
                 <img
                   alt={post.author.name}
                   height='30px'
@@ -70,7 +75,7 @@ const PostDetail = ({ post }) => {
                 </span>
               </div>
             </div>
-            <h1 className='mb-8 text-3xl font-semibold'>{post.title}</h1>
+            <h1 className='mb-8 text-3xl text-center font-semibold'>{post.title}</h1>
             {post.content.raw.children.map((typeObj, index) => {
               const children = typeObj.children.map((item, itemIndex) => getContentFragment(itemIndex, item.text, item))
 
