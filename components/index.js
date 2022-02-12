@@ -9,3 +9,5 @@ export { default as CommentsForm } from './CommentsForm';
 export { default as PostDetail } from './PostDetail';
 export { default as FeaturedPostCard } from './FeaturedPostCard';
 export { default as Loader } from './Loader';
+export { default as CanvasLayout } from './CanvasLayout';
+export { default as AcenLayout } from './AcenLayout';

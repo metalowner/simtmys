@@ -15,7 +15,7 @@ const PostWidget = ({ categories, slug }) => {
       getRecentPosts()
         .then((result) => setRelatedPosts(result))
     }
-  }, [slug])
+  }, [slug]);
 
   return (
     <div className='bg-white shadow-lg rounded-lg p-8 mb-8'>
@@ -44,7 +44,7 @@ const PostWidget = ({ categories, slug }) => {
         </div>
       ))}
   </div>
-  )
+  );
 };
 
 export default PostWidget;
