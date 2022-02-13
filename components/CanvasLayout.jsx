@@ -10,7 +10,11 @@ const CanvasLayout = () => {
     const customerEl = useRef();
     const costEl = useRef();
     const revenueEl = useRef();
-    const componentRef = useRef();
+    const alternativesEl = useRef();
+    const keyMetricsEl = useRef();
+    const conceptEl = useRef();
+    const channelsEl = useRef();
+    const earlyAdoptersEl = useRef();
 
     useEffect(() => {
         problemEl.current.value = window.localStorage.getItem('problem');
@@ -20,6 +24,11 @@ const CanvasLayout = () => {
         customerEl.current.value = window.localStorage.getItem('customer');
         costEl.current.value = window.localStorage.getItem('cost');
         revenueEl.current.value = window.localStorage.getItem('revenue');
+        alternativesEl.current.value = window.localStorage.getItem('alternatives');
+        keyMetricsEl.current.value = window.localStorage.getItem('keyMetrics');
+        conceptEl.current.value = window.localStorage.getItem('concept');
+        channelsEl.current.value = window.localStorage.getItem('channels');
+        earlyAdoptersEl.current.value = window.localStorage.getItem('earlyAdopters');
     }, []);
 
     const handleSaveLocally = () => {
@@ -31,6 +40,11 @@ const CanvasLayout = () => {
         const { value: customer } = customerEl.current;
         const { value: cost } = costEl.current;
         const { value: revenue } = revenueEl.current;
+        const { value: alternatives } = alternativesEl.current;
+        const { value: keyMetrics } = keyMetricsEl.current;
+        const { value: concept } = conceptEl.current;
+        const { value: channels } = channelsEl.current;
+        const { value: earlyAdopters } = earlyAdoptersEl.current;
 
         window.localStorage.setItem('problem', problem);
         window.localStorage.setItem('solution', solution);
@@ -39,6 +53,11 @@ const CanvasLayout = () => {
         window.localStorage.setItem('customer', customer);
         window.localStorage.setItem('cost', cost);
         window.localStorage.setItem('revenue', revenue);
+        window.localStorage.setItem('alternatives', alternatives);
+        window.localStorage.setItem('keyMetrics', keyMetrics);
+        window.localStorage.setItem('concept', concept);
+        window.localStorage.setItem('channels', channels);
+        window.localStorage.setItem('earlyAdopters', earlyAdopters);
     };
 
     const PrintingDiv = React.forwardRef((props, ref) => (
@@ -50,86 +69,140 @@ const CanvasLayout = () => {
     const ref = React.createRef();
     
     const handleOnBeforeGetContent = () => {
-        const currentChildren = ref.current.children;
-        currentChildren[0].className = 'grid grid-cols-5 grid-rows-2 gap-5 mb-8'
-        currentChildren[1].className = 'grid grid-cols-2 gap-5'
+        ref.current.className="container w-[1920px] mx-auto text-gray-700 text-center p-8"
+        ref.current.children[0].className = 'grid grid-cols-5 grid-rows-2 gap-5 mb-8'
+        ref.current.children[1].className = 'grid grid-cols-2 gap-5'
     }
 
     const handleOnAfterPrint = () => {
+        ref.current.className=""
         ref.current.children[0].className = 'grid grid-cols-1 lg:grid-cols-5 lg:grid-rows-2 gap-5 mb-8'
         ref.current.children[1].className = 'grid grid-cols-1 lg:grid-cols-2 gap-5'
+    }
 
-        return
+    function handleChange(event) {
+        console.log(event);
+        event.target.rows = (event.target.scrollHeight-80)/24+2
     }
 
     return (
-        <div ref={ref} className="container mx-auto p-8 mb-8 text-gray-700 text-center">
-            <div className='grid grid-cols-1 lg:grid-cols-5 lg:grid-rows-2 gap-5 mb-8'>
-                <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>PROBLEM</h3>
-                    <textarea 
-                    ref={problemEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Problem'
-                    name='problem'
-                    />
+        <div className="container mx-auto p-8 mb-8 text-gray-700 text-center">
+            <div ref={ref} >
+                <div className='grid grid-cols-1 lg:grid-cols-5 lg:grid-rows-2 gap-5 mb-8'>
+                    <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>PROBLEM</h3>
+                        <textarea
+                        onChange={handleChange}
+                        ref={problemEl} 
+                        className='p-4 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700 border-b border-gray-300'
+                        placeholder='Top 3 customers problems'
+                        name='problem'
+                        />
+                        <h3 className='pb-4 border-b border-gray-300 mt-2'>ALTERNATIVES</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={alternativesEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Available solutions (competitors)'
+                        name='alternatives'
+                        />
+                    </div>
+                    <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>SOLUTION</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={solutionEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Your solutions to them'
+                        name='solution'
+                        />
+                        <h3 className='pb-4 border-b border-gray-300 mt-2'>KEY METRICS</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={keyMetricsEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Key numbers telling how your business is doing'
+                        name='keyMetrics'
+                        />
+                    </div>
+                    <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>UNIQUE VALUE PROPOSITION</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={valueEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Your offer message'
+                        name='uniqueValue'
+                        />
+                        <h3 className='pb-4 border-b border-gray-300 mt-2'>CONCEPT</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={conceptEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Write your vision here'
+                        name='concept'
+                        />
+                    </div>
+                    <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>UNFAIR ADVANTAGE</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={advantageEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Something difficult to copy'
+                        name='advantage'
+                        />
+                        <h3 className='pb-4 border-b border-gray-300 mt-2'>CHANNELS</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={channelsEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Paths to customers'
+                        name='channels'
+                        />
+                    </div>
+                    <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>CUSTOMER SEGMENT</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={customerEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Target customers and users'
+                        name='customer'
+                        />
+                        <h3 className='pb-4 border-b border-gray-300 mt-2'>EARLY ADOPTERS</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={earlyAdoptersEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Your first customers'
+                        name='earlyAdopters'
+                        />
+                    </div>
                 </div>
-                <div className='bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>SOLUTION</h3>
-                    <textarea 
-                    ref={solutionEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Solution'
-                    name='solution'
-                    />
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                    <div className='bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>COST STRUCTURE</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={costEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Must have spendings'
+                        name='cost'
+                        />
+                    </div>
+                    <div className='bg-white shadow-lg rounded-lg p-4'>
+                        <h3 className='pb-4 border-b border-gray-300'>REVENUE STREAMS</h3>
+                        <textarea 
+                        onChange={handleChange}
+                        ref={revenueEl} 
+                        className='p-4 border-b border-gray-300 resize-none outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
+                        placeholder='Sources of revenue'
+                        name='revenue'
+                        />
+                    </div>
                 </div>
-                <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>UNIQUE VALUE PROPOSITION</h3>
-                    <textarea 
-                    ref={valueEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Value'
-                    name='uniqueValue'
-                    />
-                </div>
-                <div className='bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>UNFAIR ADVANTAGE</h3>
-                    <textarea 
-                    ref={advantageEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Advantage'
-                    name='advantage'
-                    />
-                </div>
-                <div className='row-span-2 bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>CUSTOMER SEGMENT</h3>
-                    <textarea 
-                    ref={customerEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Customer'
-                    name='customer'
-                    />
-                </div>
-            </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
-                <div className='bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>COST STRUCTURE</h3>
-                    <textarea 
-                    ref={costEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Cost'
-                    name='cost'
-                    />
-                </div>
-                <div className='bg-white shadow-lg rounded-lg p-4'>
-                    <h3 className='text-xl font-semibold border-b pb-4'>REVENUE STREAMS</h3>
-                    <textarea 
-                    ref={revenueEl} 
-                    className='p-4 outline-none w-full rounded-lg focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700'
-                    placeholder='Revenue'
-                    name='revenue'
-                    />
-                </div>
+                <PrintingDiv ref={ref} />
             </div>
             <div className='mt-8 flex flex-col justify-center items-center'>
                 <button 
@@ -140,13 +213,15 @@ const CanvasLayout = () => {
                     Save Locally
                 </button>
             </div>
-            <ReactToPrint
-                trigger={() => <button>Print!</button>}
-                content={() => ref.current}
-                onBeforeGetContent = {handleOnBeforeGetContent}
-                onAfterPrint = {handleOnAfterPrint}
-            />
-            <PrintingDiv ref={ref} />
+            <div className='mt-8 flex flex-col justify-center items-center'>
+                <ReactToPrint
+                    pageStyle={"@page { size: 1920px 1080px }"}
+                    trigger={() => <button className='transition duration-500 ease hover:bg-red-700 inline-block bg-red-500 text-lg rounded-full text-white px-8 py-3 cursor-pointer'>Save PDF</button>}
+                    content={() => ref.current}
+                    onBeforeGetContent = {handleOnBeforeGetContent}
+                    onAfterPrint = {handleOnAfterPrint}
+                />
+            </div>
         </div>
     );
 };
