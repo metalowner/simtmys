@@ -80,12 +80,12 @@ const CanvasLayout = () => {
         ref.current.children[1].className = 'grid grid-cols-1 lg:grid-cols-2 gap-5'
     }
 
-    const handlePageStyle = () => {
-        const width = window.screen.availWidth;
-        const height = window.screen.availHeight;
-
-        return ("@page { size: "+1920+"px "+1080+"px }")
-    }
+    const handlePageStyle = `
+        @page { size: 1920px 1080px }
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    `
 
     function handleChange(event) {
         event.target.rows = (event.target.scrollHeight-80)/24+2
