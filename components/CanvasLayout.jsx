@@ -69,7 +69,7 @@ const CanvasLayout = () => {
     const ref = React.createRef();
     
     const handleOnBeforeGetContent = () => {
-        ref.current.className="container w-[1920px] mx-auto text-gray-700 text-center p-8"
+        ref.current.className="container mx-auto text-gray-700 text-center p-8"
         ref.current.children[0].className = 'grid grid-cols-5 grid-rows-2 gap-5 mb-8'
         ref.current.children[1].className = 'grid grid-cols-2 gap-5'
     }
@@ -80,8 +80,14 @@ const CanvasLayout = () => {
         ref.current.children[1].className = 'grid grid-cols-1 lg:grid-cols-2 gap-5'
     }
 
+    const handlePageStyle = () => {
+        const width = window.screen.availWidth;
+        const height = window.screen.availHeight;
+
+        return ("@page { size: "+width+"px "+height+"px }")
+    }
+
     function handleChange(event) {
-        console.log(event);
         event.target.rows = (event.target.scrollHeight-80)/24+2
     }
 
@@ -215,7 +221,7 @@ const CanvasLayout = () => {
             </div>
             <div className='mt-8 flex flex-col justify-center items-center'>
                 <ReactToPrint
-                    pageStyle={"@page { size: 1920px 1080px }"}
+                    pageStyle={handlePageStyle}
                     trigger={() => <button className='transition duration-500 ease hover:bg-red-700 inline-block bg-red-500 text-lg rounded-full text-white px-8 py-3 cursor-pointer'>Save PDF</button>}
                     content={() => ref.current}
                     onBeforeGetContent = {handleOnBeforeGetContent}
