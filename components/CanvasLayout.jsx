@@ -84,7 +84,7 @@ const CanvasLayout = () => {
         const width = window.screen.availWidth;
         const height = window.screen.availHeight;
 
-        return ("@page { size: "+width+"px "+height+"px }")
+        return ("@page { size: "+1920+"px "+1080+"px }")
     }
 
     function handleChange(event) {
